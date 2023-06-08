@@ -1,10 +1,11 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import type { LoginReq, UserReq } from "$lib/types";
+    import type { LoginData } from "./+page.server";
 
-    async function login(event: Event) {}
+    export let data: { loginSuccess?: boolean };
+    data.loginSuccess = undefined;
 
-    let loginData: LoginReq = {
+    let loginData: LoginData = {
         credential: "",
         password: "",
     };
@@ -12,10 +13,19 @@
 
 <form
     class="mb-0 space-y-6 flex justify-center h-screen bg-[#333]"
-    on:submit|preventDefault={login}
-    method="POST"
+    method="post"
 >
     <div>
+        {#if data && data.loginSuccess === undefined}
+            <p class="text-white">Please login to continue</p>
+        {:else if data && data.loginSuccess}
+            <p class="text-green-500">Logged in! 🥳</p>
+            {setTimeout(() => {
+                goto("/");
+            }, 1000)}
+        {:else if data && !data?.loginSuccess}
+            <p class="text-red-500 pt-2">Something went wrong! 😟</p>
+        {/if}
         <div>
             <label for="credential" class="block text-sm font-medium text-white"
                 >Username or Email</label

@@ -1,3 +1,7 @@
+<script lang="ts">
+    export let loggedIn: boolean = false;
+</script>
+
 <div class="flex align-middle col-span-1 mt-4">
     <ul class="flex align-middle flex-col gap-12 pt-12 pl-8">
         <a
@@ -8,9 +12,16 @@
             class="py-x px-4 shadow-md no-underline rounded-full bg-[#333] border-2 border-white text-center text-white"
             href={"#"}>Settings</a
         >
-        <a
-            class="py-x px-4 shadow-md no-underline rounded-full bg-[#333] border-2 border-white text-center text-white"
-            href={"#"}>Logout</a
-        >
+        {#if loggedIn}
+            <a
+                class="py-x px-4 shadow-md no-underline rounded-full bg-[#333] border-2 border-white text-center text-white"
+                href={"/logout"}>Logout</a
+            >
+        {:else}
+            <a
+                class="py-x px-4 shadow-md no-underline rounded-full bg-[#333] border-2 border-white text-center text-white"
+                href={"/login"}>Login</a
+            >
+        {/if}
     </ul>
 </div>

@@ -4,17 +4,23 @@
     import TrendingBar from "../components/TrendingBar.svelte";
     import type { ActionData } from "./$types";
 
-    export let data: { posts: Post[] };
+    export let data: { posts: Post[]; loggedIn: boolean };
     const { posts } = data;
 
     export let form: ActionData;
 </script>
 
 <div class="grid grid-cols-5 h-screen bg-[#333] text-white">
-    <LeftBar />
+    <LeftBar loggedIn={data.loggedIn} />
     <div
         class="col-span-3 items-center align-middle text-center border-t-2 border-white px-4 mt-4 rounded-t-lg border-r-2 border-l-2"
     >
+        {#if data && data.loggedIn}
+            <h1 class="text-2xl">Welcome back!</h1>
+        {:else}
+            <h1 class="text-2xl">Welcome to SvelteKit!</h1>
+        {/if}
+
         {#if form && form?.success}
             <p class="text-green-500">Post sent! 🥳</p>
         {:else if form && !form?.success}
