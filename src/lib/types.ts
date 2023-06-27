@@ -9,12 +9,7 @@ export type Post = {
 };
 
 
-export type UserReq = {
-	first_name: string;
-	last_name: string;
-	username: string;
-	email: string;
-	password: string;
-};
-
-
+export type UserResp = {
+	userId: number;
+	username: string,
+}
