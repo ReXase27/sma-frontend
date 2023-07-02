@@ -3,7 +3,7 @@ import type { Actions } from "@sveltejs/kit";
 export const actions = {
     default: async ({ request }) => {
         const data = await request.formData();
-        const username = data.get("username");
+        const username = data.get("handle");
         const email = data.get("email");
         const password = data.get("password");
         const password2 = data.get("password2");
@@ -16,24 +16,24 @@ export const actions = {
             return { success: false };
         }
 
-        const loginData = {
-            username: username as string,
+        const registerData = {
+            handle: username as string,
             email: email as string,
             password: password as string,
         };
 
-        console.log(JSON.stringify(loginData));
+        console.log(JSON.stringify(registerData));
 
         const res = await fetch("http://localhost:3000/api/auth/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(loginData),
+            body: JSON.stringify(registerData),
         });
 
         if (res.status === 201) {
-            return { success: true };
+            throw { redirect: "/login" };
         }
 
         return { success: false };

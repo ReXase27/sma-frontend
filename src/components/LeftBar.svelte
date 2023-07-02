@@ -1,13 +1,14 @@
 <script lang="ts">
     export let loggedIn: boolean = false;
-    export let username: string = "";
+    export let username: string;
+    export let handle: string;
 
     import home from "$lib/assets/home.png";
     import profile from "$lib/assets/profile.png";
     import messages from "$lib/assets/messages.png";
     import notifications from "$lib/assets/notifications.png";
     import search from "$lib/assets/search.png";
-    import kata from "$lib/assets/kata.png";
+    import logout from "$lib/assets/logout.png";
     import UserCard from "./UserCard.svelte";
 </script>
 
@@ -16,7 +17,8 @@
         <ul
             class="flex align-middle flex-col gap-12 pt-12 mx-12 col-span-1 text-[#333]"
         >
-            <button
+            <a
+                href="/"
                 class="flex text-center align-middle gap-8 hover:underline decoration-teal-400 underline-offset-4 hover:cursor-pointer"
             >
                 <img
@@ -24,18 +26,19 @@
                     src={home}
                     alt="home"
                 />
-                Home
-            </button>
-            <button
+                <h1 class="lg:visible md:collapse sm:collapse">Home</h1>
+            </a>
+            <a
                 class="flex text-center align-middle gap-8 hover:underline decoration-teal-400 underline-offset-4 hover:cursor-pointer"
+                href="/profile"
             >
                 <img
                     class="w-6 h-6 align-middle content-center"
                     src={profile}
                     alt="Profle"
                 />
-                Profile
-            </button>
+                <h1 class="lg:visible md:collapse sm:collapse">Profile</h1>
+            </a>
             <button
                 class="flex text-center align-middle gap-8 hover:underline decoration-teal-400 underline-offset-4 hover:cursor-pointer"
             >
@@ -44,7 +47,7 @@
                     src={messages}
                     alt="Messages"
                 />
-                Messages
+                <h1 class="lg:visible md:collapse sm:collapse">Messages</h1>
             </button>
             <button
                 class="flex text-center align-middle gap-8 hover:underline decoration-teal-400 underline-offset-4 hover:cursor-pointer"
@@ -52,9 +55,9 @@
                 <img
                     class="w-6 h-6 align-middle content-center"
                     src={search}
-                    alt="Searcg"
+                    alt="Search"
                 />
-                Search
+                <h1 class="lg:visible md:collapse sm:collapse">Search</h1>
             </button>
             <button
                 class="flex text-center align-middle gap-8 hover:underline decoration-teal-400 underline-offset-4 hover:cursor-pointer"
@@ -64,13 +67,25 @@
                     src={notifications}
                     alt="Notifications"
                 />
-                Notifications
+                <h1 class="lg:visible md:collapse sm:collapse">
+                    Notifications
+                </h1>
             </button>
+            <a
+                class="flex text-center align-middle gap-8 hover:underline decoration-teal-400 underline-offset-4 hover:cursor-pointer"
+                href="/logout"
+            >
+                <img
+                    class="w-6 h-6 align-middle content-center"
+                    src={logout}
+                    alt="Logout"
+                />
+                <h1 class="lg:visible md:collapse sm:collapse">Logout</h1>
+            </a>
         </ul>
     </div>
 
     <div class="pb-4">
-        <div class="bg-[#333] h-[1px] w-[100%] mb-4 align-middle self-center" />
-        <UserCard {username} {loggedIn} />
+        <UserCard {username} {handle} {loggedIn} />
     </div>
 </div>

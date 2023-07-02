@@ -10,8 +10,8 @@
         {/if}
 
         {#each posts as post}
-            <h1>{post.authorId}</h1>
-            <h1>{post.title}</h1>
+            <h1>{post.authorUsername}</h1>
+            <h2>{post.authorHandle}</h2>
             <p>{post.body}</p>
         {/each}
     {:else}

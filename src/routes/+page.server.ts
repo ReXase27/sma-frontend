@@ -14,11 +14,33 @@ export const load = (async ({ cookies }) => {
 		throw redirect(301, "/logout");
 
 	const username = cookies.get("username") as string;
+	const handle = cookies.get("handle") as string;
 	const loggedIn = true;
-	const posts: Post[] = []
 
+	const resp = await fetch("http://localhost:3000/api/post/self", {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			"Cookie": session,
+		},
+	});
+	let posts: Post[] = []
 
-	return { posts: posts, loggedIn: loggedIn, username: username };
+	if (resp.status === 200) {
+		posts = await resp.json();
+
+		if (!posts) {
+			posts = [];
+		}
+
+		posts.forEach((post) => {
+			console.log(post);
+		});
+
+		return { posts: posts, loggedIn: loggedIn, username: username, handle: handle };
+	}
+
+	return { posts: posts, loggedIn: loggedIn, username: username, handle: handle };
 
 }) satisfies PageServerLoad;
 
@@ -37,13 +59,8 @@ export const actions = {
 				"Content-Type": "application/json",
 				"cookie": session,
 			},
-			body: JSON.stringify({ body: body })
+			body: JSON.stringify({ body }),
 		});
-
-		console.log(resp.status);
-		console.log(resp.headers);
-		console.log(await resp.json());
-
 
 		const status = resp.status;
 

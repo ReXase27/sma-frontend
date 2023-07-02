@@ -20,8 +20,8 @@
         >
         <div class="mt-1">
             <input
-                id="username"
-                name="username"
+                id="handle"
+                name="handle"
                 type="text"
                 autocomplete="username"
                 required

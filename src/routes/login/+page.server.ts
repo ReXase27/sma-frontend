@@ -1,7 +1,6 @@
 import checkSession from "$lib/checkSession";
 import { redirect, type Actions } from "@sveltejs/kit";
 
-
 export type LoginData = {
     email: string;
     password: string;
@@ -40,8 +39,9 @@ export const actions = {
         const sessionId = resp.headers.get("set-cookie")
         cookies.set("_sma_session", sessionId as string);
 
-        const username: { username: string } = await resp.json();
-        cookies.set("username", username.username);
+        const username: { handle: string, username: string } = await resp.json();
+        cookies.set("handle", username.handle);
+        cookies.set("username", username.username.length > 0 ? username.username : username.handle);
 
         throw redirect(301, "/");
     }

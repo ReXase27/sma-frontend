@@ -7,7 +7,8 @@
 
     export let data: {
         loggedIn: boolean;
-        username: string | null;
+        username: string;
+        handle: string;
         posts: Post[];
     };
 </script>
@@ -17,7 +18,8 @@
 >
     <LeftBar
         loggedIn={data.loggedIn}
-        username={data.username === null ? undefined : data.username}
+        handle={data.handle}
+        username={data.username}
     />
     <div
         class="col-span-3 items-center align-middle text-center border-t-[1px] border-[#333] px-4 mt-4 rounded-t-lg border-r-[1px] border-l-[1px] bg-teal-50"
