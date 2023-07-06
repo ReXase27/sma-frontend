@@ -1,4 +1,4 @@
-import type { Actions } from "@sveltejs/kit";
+import { redirect, type Actions } from "@sveltejs/kit";
 
 export const actions = {
     default: async ({ request }) => {
@@ -33,7 +33,7 @@ export const actions = {
         });
 
         if (res.status === 201) {
-            throw { redirect: "/login" };
+            throw redirect(301, "/login");
         }
 
         return { success: false };
