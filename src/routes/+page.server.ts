@@ -10,11 +10,14 @@ export const load = (async ({ cookies }) => {
 	if (!session)
 		throw redirect(301, "/login");
 
-	if (!await checkSession(session))
+	const sessionCheck = await checkSession(session);
+
+	if (!sessionCheck?.success)
 		throw redirect(301, "/logout");
 
-	const username = cookies.get("username") as string;
-	const handle = cookies.get("handle") as string;
+	const username = sessionCheck.username;
+	const handle = sessionCheck.handle;
+
 	const loggedIn = true;
 
 	const resp = await fetch("http://localhost:3000/api/post/self", {
@@ -29,13 +32,10 @@ export const load = (async ({ cookies }) => {
 	if (resp.status === 200) {
 		posts = await resp.json();
 
+
 		if (!posts) {
 			posts = [];
 		}
-
-		posts.forEach((post) => {
-			console.log(post);
-		});
 
 		return { posts: posts, loggedIn: loggedIn, username: username, handle: handle };
 	}

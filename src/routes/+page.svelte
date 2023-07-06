@@ -3,7 +3,7 @@
     import LeftBar from "../components/LeftBar.svelte";
     import TrendingBar from "../components/TrendingBar.svelte";
     import MainPostForm from "../components/MainPostForm.svelte";
-    import Timelime from "../components/Timelime.svelte";
+    import Timeline from "../components/Timeline.svelte";
 
     export let data: {
         loggedIn: boolean;
@@ -28,7 +28,7 @@
 
         <div class="bg-teal-200 h-[1px] w-[100%] mb-4" />
 
-        <Timelime posts={data.posts} />
+        <Timeline posts={data.posts} />
     </div>
     <TrendingBar />
 </div>

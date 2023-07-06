@@ -7,7 +7,8 @@ export type LoginData = {
 };
 
 export const load = (async ({ cookies }) => {
-    if (await checkSession(cookies.get("_sma_session") as string)) { throw redirect(301, "/"); }
+    const sessionCheck = await checkSession(cookies.get("_sma_session") as string);
+    if (sessionCheck?.success) { throw redirect(301, "/"); }
 });
 
 export const actions = {
@@ -38,10 +39,6 @@ export const actions = {
 
         const sessionId = resp.headers.get("set-cookie")
         cookies.set("_sma_session", sessionId as string);
-
-        const username: { handle: string, username: string } = await resp.json();
-        cookies.set("handle", username.handle);
-        cookies.set("username", username.username.length > 0 ? username.username : username.handle);
 
         throw redirect(301, "/");
     }

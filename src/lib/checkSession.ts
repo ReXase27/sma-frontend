@@ -1,4 +1,4 @@
-export default async function checkSession(sessionId: string): Promise<boolean> {
+export default async function checkSession(sessionId: string) {
     // wrap in try-catch in case the server is down
     try {
         const res = await fetch("http://localhost:3000/api/auth/check", {
@@ -8,8 +8,15 @@ export default async function checkSession(sessionId: string): Promise<boolean> 
                 "Cookie": sessionId
             },
         });
-        return res.status === 200;
+
+        const json = await res.json();
+        const username = json.username;
+        const handle = json.handle;
+
+        if (res.status === 200) {
+            return { success: true, username: username, handle: handle };
+        }
     } catch (e) {
-        return false;
+        return { success: false, username: "", handle: "" };
     }
 }
